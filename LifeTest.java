@@ -22,16 +22,19 @@ public class LifeTest {
 
     @Test
     public void destroyLonelyCell() {
+
     }
 
 
     @Test
     public void keepAliveCell() {
+
     }
 
 
     @Test
     public void destroyCrowdedCell() {
+
     }
 
 
