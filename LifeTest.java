@@ -16,26 +16,68 @@ public class LifeTest {
         ILife nextGen = l.nextGeneration();
 
         // Assert: Rasterpunkt mit drei Nachbarn sollte jetzt leben
-        assertTrue(nextGen.isAlive(1, 1));
+        assertTrue(nextGen.checkAlive(1, 1));
     }
 
 
     @Test
     public void destroyLonelyCell() {
-
+      //assertTrue(!setAlive);
     }
 
 
     @Test
     public void keepAliveCell() {
-
+      //assertTrue(setAlive);
     }
 
 
     @Test
     public void destroyCrowdedCell() {
-
+      //assertTrue(CellCount>3);
     }
+
+  int cellMatrix[][] = new int[5][5];
+   String setup[] = new String[]{      "     ",
+                                      "     ",
+                                      " *** ",
+                                      "     ",
+                                      "     " };
+
+/*@Test
+public void initMatrix() {
+for(int i = 0; i < setup.length; i++) {
+    for(int j = 0; j < setup[i].length(); j++) {
+      if(setup[i].charAt(j) == ' ') {
+        cellMatrix[i][j] = 0;
+      }
+      if(setup[i].charAt(j) == '*') {
+        cellMatrix[i][j] = 1;
+      }
+    }
+  }
+}
+
+@Test
+private void printMatrix() {
+		// TODO Auto-generated method stub
+		int lines = setup.length;
+		int columns = setup.length;
+
+		for (int i = 0; i < lines; i++) {
+			System.out.print(i + "  |");
+			for (int j = 0; j < columns; j++) {
+				System.out.print(" " + cellMatrix(i, j) + " |");
+			}
+			if (i != lines) {
+				System.out.print("\n");
+			}
+		}
+	}
+
+*/
+                   
+                                
 
 
 }

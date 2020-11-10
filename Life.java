@@ -12,6 +12,7 @@ public class Life implements ILife {
     l = (Life) l.nextGeneration();
   }
 
+  public int cellMatrix[][] = new int[5][5];
 
   public Life() {
     nukeAll();
@@ -19,14 +20,15 @@ public class Life implements ILife {
 
   public Life(String[] setup) {
     this();
-    for (int y = 0; y < setup.length; y++){
-      for (int x = 0; x < setup[y].length(); x++){
-        if (isAlive(x,y))
-          setDead(x, y);
-        if (!isAlive(x,y))
+    initMatrix(setup);
+    printMatrix(cellMatrix);
+    /*for (int y = 0; y < cellMatrix.length; y++){
+      for (int x = 0; x < cellMatrix.length; x++){
+        if (setup[y].charAt(x) != ' ')
           setAlive(x,y);
       }
     }
+    */
   }
 
 
@@ -34,11 +36,6 @@ public class Life implements ILife {
   //setzt im gesamten Array alle Leerzeichen
   public void nukeAll() {
     // TODO Auto-generated method stub
-    for (int y = 0; y < setup.length; y++){
-      for (int x = 0; x < setup[y].length(); x++){
-        setup[y].charAt(x).add(' ');
-      }
-    }
 
   }
 
@@ -50,9 +47,10 @@ public class Life implements ILife {
     /* Wenn Leerzeichen und Nachbarzellen = 3 
     dann lebend setzen
     */
-    if(!isAlive(x,y) && CellCount(x,y) == 3){
-      setup[y].charAt(x).add('*');
+    if(!checkAlive(x,y) && CellCount(x,y) == 3){
+      cellMatrix[x][y] = 1;
     }
+    
   }
 
   @Override
@@ -63,18 +61,19 @@ public class Life implements ILife {
     kleiner 2 oder größer 3 sind, stirbt die Zelle
     an der Stelle x,y
     */
-    if(isAlive(x,y) && (CellCount(x,y)<2 || CellCount(x,y)>3)){
-    setup[y].charAt(x).add(' ');
+    if(checkAlive(x,y) && (CellCount(x,y)<2 || CellCount(x,y)>3)){
+      cellMatrix[x][y] = 0;
     }
   }
 
-  @Override
+
   /*checkt ob an der Position y,x ein 
   Leerzeichen ist wenn ja dann gibt die Methode
   false zurück, sprich die Zelle ist nicht am leben
   */
-  public boolean isAlive(int x, int y) {
-    if (setup[y].charAt(x) != ' '){
+  public boolean checkAlive(int x, int y) {
+    
+    if (cellMatrix[x][y] != 0){
       return true;
     }
 		return false;
@@ -82,7 +81,14 @@ public class Life implements ILife {
 
   @Override
   public ILife nextGeneration() {
-    // TODO Auto-generated method stub
+    // TODO Auto-generated method 
+    for(int i = 0; i < cellMatrix.length; i++) {
+     for(int j = 0; j < cellMatrix.length; j++) {
+        setAlive(i,j);
+        setDead(i,j);
+        printMatrix(cellMatrix);
+     }
+    }  
     return null;
   }
 
@@ -91,26 +97,56 @@ public class Life implements ILife {
 die setAlive und setDead Methoden*/
   public int CellCount (int x,int y){
     int counter = 0;
-		if (isAlive(x-1, y-1))
+		if (checkAlive(x-1, y-1))
 			counter++;
-		if (isAlive(x-1, y))
+		if (checkAlive(x-1, y))
 			counter++;
-		if (isAlive(x-1, y+1))
+		if (checkAlive(x-1, y+1))
 			counter++;
-		if (isAlive(x, y-1))
+		if (checkAlive(x, y-1))
 			counter++;
-		if (isAlive(x, y+1))
+		if (checkAlive(x, y+1))
 			counter++;
-		if (isAlive(x+1, y-1))
+		if (checkAlive(x+1, y-1))
 			counter++;
-		if (isAlive(x+1, y))
+		if (checkAlive(x+1, y))
 			counter++;
-		if (isAlive(x+1, y+1))
+		if (checkAlive(x+1, y+1))
 			counter++;
 		return counter;
   }
+
+public void initMatrix(String[] setup) {
+
+for(int i = 0; i < setup.length; i++) {
+    for(int j = 0; j < setup[i].length(); j++) {
+      if(setup[i].charAt(j) == ' ') {
+        cellMatrix[i][j] = 0;
+      }
+      if(setup[i].charAt(j) == '*') {
+        cellMatrix[i][j] = 1;
+      }
+    }
+  }
 }
 
+private void printMatrix(int[][] setup) {
+		// TODO Auto-generated method stub
+		int lines = setup.length;
+		int columns = setup.length;
+
+		for (int i = 0; i < lines; i++) {
+			System.out.print(i + "  |");
+			for (int j = 0; j < columns; j++) {
+				System.out.print(" " + cellMatrix[i][j] + " |");
+			}
+			if (i != lines) {
+				System.out.print("\n");
+			}
+		}
+	}
+
+}
 
 
 
